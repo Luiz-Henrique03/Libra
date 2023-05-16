@@ -41,22 +41,10 @@ for dir_ in os.listdir(DATA_DIR):
                     y = hand_landmarks.landmark[i].y
                     data_aux.append(x - min(x_))
                     data_aux.append(y - min(y_))
-                    mp_drawing.draw_landmarks(
-                        img_rgb,
-                        hand_landmarks,
-                        
-                    )
-                    mp.HAND_CONNECTIONS,
-                    mp_drawing_styles.get_default_hand_landmarks_style(),
-                    mp_drawing_styles.get_default_hand_connections_style()
 
-            #data.append(data_aux)
-            #labels.append(dir_)
-            plt.figure()
-            plt.imshow(img_rgb)
+            data.append(data_aux)
+            labels.append(dir_)
 
-
-
-#f = open('data.pickle', 'wb')
-#pickle.dump({'data': data, 'labels': labels}, f)
-#f.close()
+f = open('data.pickle', 'wb')
+pickle.dump({'data': data, 'labels': labels}, f)
+f.close()
