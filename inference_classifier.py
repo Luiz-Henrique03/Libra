@@ -1,15 +1,18 @@
-import  cv2
+import cv2
+import numpy as np
 import mediapipe as mp
 import pickle
 
 cap = cv2.VideoCapture(0)
 model_dict = pickle.load(open('./model.p','rb'))
-model = model_dict
+model = model_dict['mpodel']
+
 mp_hands = mp.solutions.hands
 mp_drawing = mp.solutions.drawing_utils
 mp_drawing_styles = mp.solutions.drawing_styles
 
 hands = mp_hands.Hands(static_image_mode=True, min_detection_confidence=0.3)
+labels_dict = {0:'N',1:'E',2:'Y'}
 
 while True:
     data_aux = []
@@ -25,11 +28,17 @@ while True:
                 mp_hands.HAND_CONNECTIONS,  # hand connections
                 mp_drawing_styles.get_default_hand_landmarks_style(),
                 mp_drawing_styles.get_default_hand_connections_style())
-        for i in range(len(hand_landmarks.landmark)):
-            x = hand_landmarks.landmark[i].x
-            y = hand_landmarks.landmark[i].y
-            data_aux.append(x - min(x_))
-            data_aux.append(y - min(y_))
+        for hand_landmarks in results.multi_hand_landmarks:
+            for i in range(len(hand_landmarks.landmark)):
+                x = hand_landmarks.landmark[i].x
+                y = hand_landmarks.landmark[i].y
+
+                data_aux.append(x)
+                data_aux.append(y)
+        prediction = model.predict([np.asarray(data_aux)])
+        predicted_character = labels_dict[int(prediction[0])]
+        print(predicted_character)
+
 
 
     cv2.imshow('frame',frame)
