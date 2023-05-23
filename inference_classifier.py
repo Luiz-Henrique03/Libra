@@ -12,12 +12,12 @@ mp_drawing = mp.solutions.drawing_utils
 mp_drawing_styles = mp.solutions.drawing_styles
 
 hands = mp_hands.Hands(static_image_mode=True, min_detection_confidence=0.3)
-labels_dict = {0:'A',1:'B', 2:'C', 3:'D', 4:'E', 5:'F', 6:'G', 7:'I', 8:'L',9:'M', 10:'N',11:'O', 12:'P', 13:'Q', 14:'R', 15:'S', 16:'T',17:'U', 18:'V'}
+labels_dict = {0:'A', 1:'B', 2:'C', 3:'D', 4:'E', 5:'F', 6:'G', 7:'I', 8:'L', 9:'M', 10:'N', 11:'O', 12:'P', 13:'Q', 14:'R', 15:'S', 16:'T', 17:'U', 18:'V'}
 
 while True:
     data_aux = []
     ret, frame = cap.read()
-    frame_rgb = cv2.cvtColor(frame,cv2.COLOR_BGR2RGB)
+    frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
     results = hands.process(frame_rgb)
 
     if results.multi_hand_landmarks:
@@ -35,13 +35,16 @@ while True:
 
                 data_aux.append(x)
                 data_aux.append(y)
+
+        # Preencher dados com zeros para ter 84 características
+        data_aux += [0] * (84 - len(data_aux))
+
         prediction = model.predict([np.asarray(data_aux)])
         predicted_character = labels_dict[int(prediction[0])]
         print(predicted_character)
 
-
-
-    cv2.imshow('frame',frame)
+    cv2.imshow('frame', frame)
     cv2.waitKey(25)
+
 cap.release()
 cv2.destroyAllWindows()

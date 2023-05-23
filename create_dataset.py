@@ -3,7 +3,7 @@ import pickle
 
 import mediapipe as mp
 import cv2
-import matplotlib.pyplot as plt
+import numpy as np
 
 
 mp_hands = mp.solutions.hands
@@ -16,6 +16,8 @@ DATA_DIR = './data'
 
 data = []
 labels = []
+max_data_length = 0
+
 for dir_ in os.listdir(DATA_DIR):
     for img_path in os.listdir(os.path.join(DATA_DIR, dir_)):
         data_aux = []
@@ -44,6 +46,12 @@ for dir_ in os.listdir(DATA_DIR):
 
             data.append(data_aux)
             labels.append(dir_)
+
+            # Atualizar o comprimento máximo da amostra de dados
+            max_data_length = max(max_data_length, len(data_aux))
+
+# Preencher amostras com tamanho variável com um valor padrão (0)
+data = [sample_data + [0] * (max_data_length - len(sample_data)) for sample_data in data]
 
 f = open('data.pickle', 'wb')
 pickle.dump({'data': data, 'labels': labels}, f)

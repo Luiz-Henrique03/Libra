@@ -2,6 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="76caa33d-21cf-4d0e-a589-e411f9b9fbfe" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/create_dataset.py" beforeDir="false" afterPath="$PROJECT_DIR$/create_dataset.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data.pickle" beforeDir="false" afterPath="$PROJECT_DIR$/data.pickle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/inference_classifier.py" beforeDir="false" afterPath="$PROJECT_DIR$/inference_classifier.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/train_classifier.py" beforeDir="false" afterPath="$PROJECT_DIR$/train_classifier.py" afterDir="false" />
