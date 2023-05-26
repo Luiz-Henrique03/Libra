@@ -10,10 +10,12 @@ mp_hands = mp.solutions.hands
 mp_drawing = mp.solutions.drawing_utils
 mp_drawing_styles = mp.solutions.drawing_styles
 
+#Inicializa o objeto para detecção das mãos
 hands = mp_hands.Hands(static_image_mode=True, min_detection_confidence=0.3, max_num_hands=1)
 
 DATA_DIR = './data'
 
+#Percorre os diretórios das imagens
 data = []
 labels = []
 for dir_ in os.listdir(DATA_DIR):
@@ -23,19 +25,22 @@ for dir_ in os.listdir(DATA_DIR):
         x_ = []
         y_ = []
 
+        # Carrega a imagem
         img = cv2.imread(os.path.join(DATA_DIR, dir_, img_path))
         img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-
+        # Processa a imagem em busca das mãos
         results = hands.process(img_rgb)
+        # Verifica se pelo menos uma mão foi detectada
         if results.multi_hand_landmarks:
             for hand_landmarks in results.multi_hand_landmarks:
+                # Coleta as coordenadas x e y de cada landmark
                 for i in range(len(hand_landmarks.landmark)):
                     x = hand_landmarks.landmark[i].x
                     y = hand_landmarks.landmark[i].y
 
                     x_.append(x)
                     y_.append(y)
-
+                # Calcula as coordenadas normalizadas em relação ao ponto mais baixo
                 for i in range(len(hand_landmarks.landmark)):
                     x = hand_landmarks.landmark[i].x
                     y = hand_landmarks.landmark[i].y
