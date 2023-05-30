@@ -2,8 +2,7 @@ import pickle
 import cv2
 import mediapipe as mp
 import numpy as np
-from time import sleep
-
+import time
 
 model_dict = pickle.load(open('./model.p', 'rb'))
 model = model_dict['model']
@@ -76,7 +75,8 @@ while True:
             characters.append(predicted_character)
             word = ''.join(characters)
             cv2.putText(frame, word, (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 1.3, (0, 255, 0), 3, cv2.LINE_AA)
-
+            cv2.imshow('frame', frame)
+            cv2.waitKey(2000)  # Aguarda 10 segundos (10000 ms) antes de prosseguir
 
     cv2.imshow('frame', frame)
     if cv2.waitKey(1) & 0xFF == ord('q'):
